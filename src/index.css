@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  height: 100%;
+  line-height: 1.2;
+  overflow-y: scroll;
+}
+
+body {
+  font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  background-color: #cdedfd;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition-delay: 9999s;
+  -webkit-text-fill-color: #0096c7;
+}
