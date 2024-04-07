@@ -13,7 +13,7 @@ export default function MainLayout({ children }: Props) {
         minHeight: 'inherit'
       }}
     >
-      <div className='fixed z-10 h-12 desktop:h-16 w-full'>
+      <div className='fixed z-[9999] h-12 desktop:h-16 w-full'>
         <MainHeader />
       </div>
       <div className='pt-12 desktop:pt-16 '>{children}</div>
