@@ -2,8 +2,9 @@ import axios, { AxiosError, AxiosInstance, HttpStatusCode } from 'axios'
 import { clearLS, getAccessTokenFromLS, setAccessTokenToLS } from './auth'
 import { toast } from 'react-toastify'
 import { ErrorRespone } from 'src/types/utils.type'
+import { HttpStatusResponse } from 'src/constants/HttpStatusRespone'
 
-const API_URL = 'https://ltnc-be.hareta.online/'
+const API_URL = 'https://test.hareta.online/'
 const VERSION = 'v1/'
 export const FULL_API_URL = API_URL.concat(VERSION)
 
@@ -52,7 +53,7 @@ class Http {
           toast.error(message)
         }
         // console.log(error)
-        if ((error.response?.data as ErrorRespone).status_code === HttpStatusCode.InternalServerError) {
+        if ((error.response?.data as ErrorRespone).error_key === HttpStatusResponse.ErrInvalidToken) {
           clearLS()
         }
         return Promise.reject(error)

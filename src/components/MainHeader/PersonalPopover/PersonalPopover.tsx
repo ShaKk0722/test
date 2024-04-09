@@ -7,7 +7,9 @@ import mainPath, { personalPath } from 'src/constants/path'
 import { AppContext } from 'src/contexts/app.context'
 
 export default function PersonalPopover() {
-  const { profile, logoutFunction } = useContext(AppContext)
+  const { profile, handleLogout } = useContext(AppContext)
+
+  const isTeacher = profile?.role == 1
 
   //! STYLES
   const itemStyle = 'py-2 px-4 flex items-center justify-start w-full select-none hover:bg-webColor200'
@@ -28,22 +30,24 @@ export default function PersonalPopover() {
           arrowClassname='invisible'
           placement='bottom-end'
           renderPopover={
-            <div className='py-2 desktop:text-lg space-y-2 text-darkText min-w-40 rounded-md shadow-lg bg-webColor100 overflow-hidden'>
+            <div className='py-2 desktop:text-lg space-y-2 text-darkText min-w-52 rounded-md shadow-lg bg-webColor100 overflow-hidden'>
               <div className=''>
                 <NavLink to={mainPath.personal} className={itemStyle}>
                   Hồ sơ
                 </NavLink>
 
-                <NavLink to={personalPath.score} className={itemStyle}>
-                  Điểm
-                </NavLink>
+                {!isTeacher && (
+                  <NavLink to={personalPath.score} className={itemStyle}>
+                    Điểm
+                  </NavLink>
+                )}
 
                 <NavLink to={personalPath.account} className={itemStyle}>
                   Tài khoản
                 </NavLink>
               </div>
               <div className='w-full border-t border-black/20'></div>
-              <button className={itemStyle} onClick={() => logoutFunction()}>
+              <button className={itemStyle} onClick={() => handleLogout()}>
                 Đăng xuất
               </button>
             </div>

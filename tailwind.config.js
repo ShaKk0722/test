@@ -24,7 +24,7 @@ module.exports = {
         //? TEXT
         lightText: '#EEEEEE',
         darkText: '#111111',
-        primaryText: '#0096C7',
+        primaryText: '#0077B6',
         primaryTextUnHover: '#00B4D8',
         alertRed: '#ff0f0f',
         successGreen: '#4bb543',
@@ -32,7 +32,13 @@ module.exports = {
 
         //? INTERACTING
         unhoverBg: '#48CAE4',
-        hoveringBg: '#00B4D8'
+        hoveringBg: '#00B4D8',
+
+        //? Score color
+        weakColor: '#cc3300',
+        normalColor: '#ffcc00',
+        fineColor: '#023E8A',
+        goodColor: '#339900'
       }
     },
     screens: {

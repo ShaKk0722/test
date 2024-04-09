@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 import AccountInput from 'src/components/AccountInput'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { LoginSchema, loginSchema } from 'src/utils/rules'
+import { LoginSchema, loginSchema } from 'src/rules/auth.rule'
 import { useMutation } from '@tanstack/react-query'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretLeft } from '@fortawesome/free-solid-svg-icons'
@@ -15,7 +15,7 @@ import { HttpStatusMessage } from 'src/constants/httpStatusMessage'
 import Button from 'src/components/Button'
 import mainPath from 'src/constants/path'
 import MainFooter from 'src/components/MainFooter'
-import userApi from 'src/apis/user.api'
+import userApi from 'src/apis/auth.api'
 
 type FormData = LoginSchema
 
@@ -45,7 +45,6 @@ export default function LoginPage() {
   const onSubmit = handleSubmit((data) => {
     loginMutation.mutate(data, {
       onSuccess: () => {
-        setIsAuthenticated(true)
         // const token = getAccessTokenFromLS()
         // const headers = {
         //   Authorization: `Bearer ${token}`,
@@ -55,22 +54,21 @@ export default function LoginPage() {
         //   setProfileToLS(response.data.data)
         // })
         getProfileMutation.mutateAsync().then((response) => {
+          setIsAuthenticated(true)
           setProfileToLS(response.data.data)
           setProfile(response.data.data)
+          navigate(-1)
         })
-
-        navigate(-1)
       },
       onError: (error) => {
         if (isAxiosBadRequestError<ErrorRespone>(error)) {
           console.log(error)
           const formError = error.response?.data
           if (formError) {
-            const errorRespone = HttpStatusMessage.find(({ error_key }) => error_key === formError.error_key)
-            if (errorRespone) {
-              console.log(errorRespone.error_message)
+            const errorMessage = HttpStatusMessage.get(formError.error_key)
+            if (errorMessage) {
               setError('username', {
-                message: errorRespone.error_message,
+                message: errorMessage,
                 type: 'Server'
               })
               setError('password', {
